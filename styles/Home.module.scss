@@ -16,6 +16,13 @@
   @include xl-phone {
     grid-template-columns: repeat(1, 1fr);
   }
+  .loading {
+    grid-column: span 4;
+    justify-self: center;
+    align-self: center;
+    height: 120px;
+    width: 120px;
+  }
 }
 .loadMoreWrapper {
   height: 10vh;

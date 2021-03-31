@@ -32,7 +32,11 @@ export default function Home() {
     <TagContext.Provider value={{ select, setSelect }}>
       <Layout>
         <div className={styles.grid}>
-          {posts &&
+          {!posts ? (
+            // <h3 className={styles.loading}>loading..</h3>
+            <img src={'/bars.svg'} className={styles.loading} />
+          ) : (
+            posts &&
             posts.map((post, index) => {
               if (index <= limit) {
                 return (
@@ -52,8 +56,10 @@ export default function Home() {
                   />
                 )
               }
-            })}
+            })
+          )}
         </div>
+
         <div className={styles.loadMoreWrapper}>
           <button
             className={styles.loadMore}
