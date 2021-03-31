@@ -1,65 +1,66 @@
-import Head from 'next/head'
-import styles from '../styles/Home.module.css'
+import { useEffect, useState } from 'react'
+import styles from '../styles/Home.module.scss'
+import Layout from '@layout/layout'
+import Card from '@card/card'
+import { fetchPosts } from './util/fetchPosts'
+import { TagContext } from './util/context/tagContext'
 
 export default function Home() {
+  const [select, setSelect] = useState()
+  const [limit, setLimit] = useState(25)
+  const [posts, setPosts] = useState()
+
+  useEffect(async () => {
+    if (select) {
+      setLimit(25)
+      const {
+        data: { data },
+      } = await fetchPosts(select)
+      setPosts(data)
+    } else {
+      const {
+        data: { data },
+      } = await fetchPosts()
+      setPosts(data)
+    }
+  }, [select])
+
   return (
-    <div className={styles.container}>
-      <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
-      <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
-
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
-        </p>
-
+    <TagContext.Provider value={{ select, setSelect }}>
+      <Layout>
         <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className={styles.card}
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
+          {posts &&
+            posts.map((filtered, index) => {
+              if (index <= limit) {
+                return (
+                  <Card
+                    key={filtered.id}
+                    source={filtered.image}
+                    identifier={filtered.owner.id}
+                    poster={`@${filtered.owner.firstName} ${filtered.owner.lastName}`}
+                    // Hittade inte "bid" någonstnas i datan så drog in likes
+                    bid={filtered.likes}
+                    minutes={new Date(filtered.publishDate).getMinutes()}
+                    seconds={new Date(filtered.publishDate).getSeconds()}
+                    posterSource={filtered.owner.picture}
+                    posterMail={filtered.owner.email}
+                    altText={filtered.text}
+                    posterName={`${filtered.owner.firstName} ${filtered.owner.lastName}`}
+                  />
+                )
+              }
+            })}
         </div>
-      </main>
-
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
-        </a>
-      </footer>
-    </div>
+        <div className={styles.loadMoreWrapper}>
+          <button
+            className={styles.loadMore}
+            style={limit > 25 ? { display: 'none' } : null}
+            onClick={() => setLimit(limit + 25)}
+          >
+            Load More
+          </button>
+        </div>
+      </Layout>
+    </TagContext.Provider>
   )
 }

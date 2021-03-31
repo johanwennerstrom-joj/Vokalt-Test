@@ -1,0 +1,12 @@
+{
+    "compilerOptions": {
+        "baseUrl": ".",
+        "paths": {
+            "@card/*": ["components/card/*"],
+            "@filter/*": ["components/filter/*"],
+            "@nav/*": ["components/nav/*"],
+            "@layout/*": ["components/layout/*"],
+
+        },
+    },
+}

@@ -1,0 +1,45 @@
+@import '../../styles/mq.scss';
+.filterWrapper {
+  height: 15vh;
+  width: 100%;
+  border-bottom: solid 1px #000;
+  margin: 0 auto;
+
+  @include tablet {
+    height: 25vh;
+  }
+  .filterList {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    height: 100%;
+    padding: 0;
+    width: 100%;
+    .listItem {
+      .tagButton {
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+        border-radius: 10px;
+        padding: 0.5rem;
+        min-width: 40px;
+        font-size: 14px;
+        font-weight: 200;
+        &.click {
+          background-color: #000;
+          color: #fff;
+        }
+        &:hover {
+          background-color: #dfdfdf;
+        }
+        &:focus {
+          background-color: #000;
+          color: #fff;
+          // Dålig a11y men för att stämme med skissen :)
+          outline: none;
+        }
+      }
+    }
+  }
+}
