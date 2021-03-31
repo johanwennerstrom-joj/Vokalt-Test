@@ -7,9 +7,13 @@ const Filter = () => {
   const [tags, setTags] = useState(null)
   const { select, setSelect } = useContext(TagContext)
 
-  useEffect(async () => {
-    const res = await fetchTags()
-    setTags(res.data.data)
+  useEffect(() => {
+    const getTags = async () => {
+      const res = await fetchTags()
+      setTags(res.data.data)
+    }
+
+    getTags()
   }, [])
 
   const clickHandler = (event) => {

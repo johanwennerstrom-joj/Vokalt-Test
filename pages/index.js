@@ -10,19 +10,22 @@ export default function Home() {
   const [limit, setLimit] = useState(25)
   const [posts, setPosts] = useState()
 
-  useEffect(async () => {
-    if (select) {
-      setLimit(25)
-      const {
-        data: { data },
-      } = await fetchPosts(select)
-      setPosts(data)
-    } else {
-      const {
-        data: { data },
-      } = await fetchPosts()
-      setPosts(data)
+  useEffect(() => {
+    const getPosts = async () => {
+      if (select) {
+        setLimit(25)
+        const {
+          data: { data },
+        } = await fetchPosts(select)
+        setPosts(data)
+      } else {
+        const {
+          data: { data },
+        } = await fetchPosts()
+        setPosts(data)
+      }
     }
+    getPosts()
   }, [select])
 
   return (
