@@ -30,22 +30,22 @@ export default function Home() {
       <Layout>
         <div className={styles.grid}>
           {posts &&
-            posts.map((filtered, index) => {
+            posts.map((post, index) => {
               if (index <= limit) {
                 return (
                   <Card
-                    key={filtered.id}
-                    source={filtered.image}
-                    identifier={filtered.owner.id}
-                    poster={`@${filtered.owner.firstName} ${filtered.owner.lastName}`}
+                    key={post.id}
+                    source={post.image}
+                    identifier={post.owner.id}
+                    poster={`@${post.owner.firstName} ${post.owner.lastName}`}
                     // Hittade inte "bid" någonstnas i datan så drog in likes
-                    bid={filtered.likes}
-                    minutes={new Date(filtered.publishDate).getMinutes()}
-                    seconds={new Date(filtered.publishDate).getSeconds()}
-                    posterSource={filtered.owner.picture}
-                    posterMail={filtered.owner.email}
-                    altText={filtered.text}
-                    posterName={`${filtered.owner.firstName} ${filtered.owner.lastName}`}
+                    bid={post.likes}
+                    minutes={new Date(post.publishDate).getMinutes()}
+                    seconds={new Date(post.publishDate).getSeconds()}
+                    posterSource={post.owner.picture}
+                    posterMail={post.owner.email}
+                    altText={post.text}
+                    posterName={`${post.owner.firstName} ${post.owner.lastName}`}
                   />
                 )
               }
