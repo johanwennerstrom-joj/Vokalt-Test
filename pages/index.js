@@ -33,28 +33,12 @@ export default function Home() {
       <Layout>
         <div className={styles.grid}>
           {!posts ? (
-            // <h3 className={styles.loading}>loading..</h3>
             <img src={'/bars.svg'} className={styles.loading} />
           ) : (
             posts &&
             posts.map((post, index) => {
               if (index <= limit) {
-                return (
-                  <Card
-                    key={post.id}
-                    source={post.image}
-                    identifier={post.owner.id}
-                    poster={`@${post.owner.firstName} ${post.owner.lastName}`}
-                    // Hittade inte "bid" någonstnas i datan så drog in likes
-                    bid={post.likes}
-                    minutes={new Date(post.publishDate).getMinutes()}
-                    seconds={new Date(post.publishDate).getSeconds()}
-                    posterSource={post.owner.picture}
-                    posterMail={post.owner.email}
-                    altText={post.text}
-                    posterName={`${post.owner.firstName} ${post.owner.lastName}`}
-                  />
-                )
+                return <Card post={post} />
               }
             })
           )}
