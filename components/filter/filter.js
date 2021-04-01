@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from 'react'
-import { TagContext } from '../../pages/util/context/tagContext'
-import { fetchTags } from '../../pages/util/fetchTags'
+import { TagContext } from '../../util/context/tagContext'
+import { fetchTags } from '../../util/fetchTags'
 import styles from './filter.module.scss'
 
 const Filter = () => {

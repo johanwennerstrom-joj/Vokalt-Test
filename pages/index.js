@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react'
 import styles from '../styles/Home.module.scss'
 import Layout from '@layout/layout'
 import Card from '@card/card'
-import { fetchPosts } from './util/fetchPosts'
-import { TagContext } from './util/context/tagContext'
+import { fetchPosts } from '../util/fetchPosts'
+import { TagContext } from '../util/context/tagContext'
 
 export default function Home() {
   const [select, setSelect] = useState()
