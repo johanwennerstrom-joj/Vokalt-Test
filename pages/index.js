@@ -38,7 +38,7 @@ export default function Home() {
             posts &&
             posts.map((post, index) => {
               if (index <= limit) {
-                return <Card post={post} />
+                return <Card post={post} key={post.id} />
               }
             })
           )}
